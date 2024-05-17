@@ -1,0 +1,13 @@
+http_server:
+  address: ":8080"
+  timeout: 4s
+  idle_timeout: 30s
+postgres:
+  postgres_db: "order"
+  postgres_user: "order-user"
+  postgres_password: "order-password"
+  postgres_host: "localhost"
+  postgres_port: "54321"
+migration_dir: "file://migrations/"
+# localhost:54321
+# PG_DSN=postgres://banner-user:banner-password@pg-local:5432/banner
