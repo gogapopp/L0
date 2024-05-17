@@ -10,6 +10,7 @@ import (
 
 	"github.com/gogapopp/L0/internal/config"
 	"github.com/gogapopp/L0/internal/handler"
+	cacherecoverer "github.com/gogapopp/L0/internal/libs/cache_recoverer"
 	"github.com/gogapopp/L0/internal/logger"
 	"github.com/gogapopp/L0/internal/repository/cache"
 	"github.com/gogapopp/L0/internal/repository/postgres"
@@ -29,6 +30,8 @@ func main() {
 	if err := postgres.MigrateUp(config); err != nil {
 		logger.Fatal(err)
 	}
+
+	cacherecoverer.CacheRecover(logger, cache, postgres)
 
 	mux := http.DefaultServeMux
 	mux.HandleFunc("GET /orders/{id}", handler.GetOrderById(logger, service))

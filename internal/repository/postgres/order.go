@@ -10,3 +10,7 @@ func GetOrder(orderUID string) (models.Order, error) {
 func AddOrder(models.Order) error {
 	return nil
 }
+
+func GetAllOrders() ([]models.Order, error) {
+	return []models.Order{}, nil
+}
