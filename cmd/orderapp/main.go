@@ -10,8 +10,9 @@ import (
 
 	"github.com/gogapopp/L0/internal/config"
 	"github.com/gogapopp/L0/internal/handler"
-	cacherecoverer "github.com/gogapopp/L0/internal/libs/cache_recoverer"
-	"github.com/gogapopp/L0/internal/logger"
+	cache_recoverer "github.com/gogapopp/L0/internal/libs/cache_recoverer"
+	"github.com/gogapopp/L0/internal/libs/logger"
+	nats_streaming "github.com/gogapopp/L0/internal/libs/nats_streaming"
 	"github.com/gogapopp/L0/internal/repository/cache"
 	"github.com/gogapopp/L0/internal/repository/postgres"
 	"github.com/gogapopp/L0/internal/service"
@@ -19,19 +20,30 @@ import (
 
 func main() {
 	var (
-		logger   = must(logger.New())
-		config   = must(config.New())
+		logger = must(logger.New())
+		config = must(config.New())
+
 		postgres = must(postgres.New(config))
 		cache    = cache.New(time.Hour*24, time.Hour*24)
-		service  = service.New(postgres, cache)
+
+		stanConn = must(nats_streaming.Connect())
+
+		service = service.New(postgres, cache)
 	)
 	defer postgres.Close()
+	defer stanConn.Close()
 
 	if err := postgres.MigrateUp(config); err != nil {
 		logger.Fatal(err)
 	}
 
-	cacherecoverer.CacheRecover(logger, cache, postgres)
+	sub, err := stanConn.Sub(logger, postgres)
+	if err != nil {
+		logger.Fatal(err)
+	}
+	defer sub.Unsubscribe()
+
+	cache_recoverer.CacheRecover(logger, cache, postgres)
 
 	mux := http.DefaultServeMux
 	mux.HandleFunc("GET /orders/{id}", handler.GetOrderById(logger, service))

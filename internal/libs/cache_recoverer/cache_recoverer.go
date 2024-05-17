@@ -1,12 +1,14 @@
 package cacherecoverer
 
 import (
+	"context"
+
 	"github.com/gogapopp/L0/internal/models"
 	"go.uber.org/zap"
 )
 
 type storager interface {
-	GetAllOrders() ([]models.Order, error)
+	GetAllOrders(ctx context.Context) ([]models.Order, error)
 }
 
 type cacher interface {
@@ -14,7 +16,7 @@ type cacher interface {
 }
 
 func CacheRecover(logger *zap.SugaredLogger, cache cacher, store storager) {
-	orders, err := store.GetAllOrders()
+	orders, err := store.GetAllOrders(context.Background())
 	logger.Error("failed to get all orders from the database: %w", err)
 	for _, order := range orders {
 		cache.SetOrderInCache(order)

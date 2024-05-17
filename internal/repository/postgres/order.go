@@ -1,16 +1,20 @@
 package postgres
 
-import "github.com/gogapopp/L0/internal/models"
+import (
+	"context"
 
-func GetOrder(orderUID string) (models.Order, error) {
+	"github.com/gogapopp/L0/internal/models"
+)
+
+func (s *repository) GetOrder(ctx context.Context, orderUID string) (models.Order, error) {
 	const op = "postgres.order.GetOrder"
 	return models.Order{}, nil
 }
 
-func AddOrder(models.Order) error {
+func (s *repository) AddOrder(ctx context.Context, order models.Order) error {
 	return nil
 }
 
-func GetAllOrders() ([]models.Order, error) {
+func (s *repository) GetAllOrders(ctx context.Context) ([]models.Order, error) {
 	return []models.Order{}, nil
 }
