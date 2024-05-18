@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Order Details</title>
+</head>
+<body>
+	<h1>Order Details</h1>
+	<p>Order UID: {{.Order.OrderUID}}</p>
+	<p>Track Number: {{.Order.TrackNumber}}</p>
+	<p>Entry: {{.Order.Entry}}</p>
+	<p>Locale: {{.Order.Locale}}</p>
+	<p>Internal Signature: {{.Order.InternalSignature}}</p>
+	<p>Customer ID: {{.Order.CustomerID}}</p>
+	<p>Delivery Service: {{.Order.DeliveryService}}</p>
+	<p>Shard Key: {{.Order.ShardKey}}</p>
+	<p>Sm ID: {{.Order.SmID}}</p>
+	<p>Date Created: {{.Order.DateCreated}}</p>
+	<p>Oof Shard: {{.Order.OofShard}}</p>
+
+	<h2>Delivery Details</h2>
+	<p>Name: {{.Order.Delivery.Name}}</p>
+	<p>Phone: {{.Order.Delivery.Phone}}</p>
+	<p>Zip: {{.Order.Delivery.Zip}}</p>
+	<p>City: {{.Order.Delivery.City}}</p>
+	<p>Address: {{.Order.Delivery.Address}}</p>
+	<p>Region: {{.Order.Delivery.Region}}</p>
+	<p>Email: {{.Order.Delivery.Email}}</p>
+
+	<h2>Payment Details</h2>
+	<p>Transaction: {{.Order.Payment.Transaction}}</p>
+	<p>Request ID: {{.Order.Payment.RequestID}}</p>
+	<p>Currency: {{.Order.Payment.Currency}}</p>
+	<p>Provider: {{.Order.Payment.Provider}}</p>
+	<p>Amount: {{.Order.Payment.Amount}}</p>
+	<p>Payment Dt: {{.Order.Payment.PaymentDt}}</p>
+	<p>Bank: {{.Order.Payment.Bank}}</p>
+	<p>Delivery Cost: {{.Order.Payment.DeliveryCost}}</p>
+	<p>Goods Total: {{.Order.Payment.GoodsTotal}}</p>
+	<p>Custom Fee: {{.Order.Payment.CustomFee}}</p>
+
+	{{range $index, $item := .Order.Items}}
+	<h2>Item {{$index}} Details</h2>
+	<p>Chrt ID: {{$item.ChrtID}}</p>
+	<p>Track Number: {{$item.TrackNumber}}</p>
+	<p>Price: {{$item.Price}}</p>
+	<p>RID: {{$item.RID}}</p>
+	<p>Name: {{$item.Name}}</p>
+	<p>Sale: {{$item.Sale}}</p>
+	<p>Size: {{$item.Size}}</p>
+	<p>Total Price: {{$item.TotalPrice}}</p>
+	<p>Nm ID: {{$item.NmID}}</p>
+	<p>Brand: {{$item.Brand}}</p>
+	<p>Status: {{$item.Status}}</p>
+	{{end}}
+</body>
+</html>

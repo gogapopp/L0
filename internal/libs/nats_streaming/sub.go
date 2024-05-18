@@ -14,7 +14,7 @@ type storager interface {
 }
 
 func (n *nats) Sub(logger *zap.SugaredLogger, store storager) (stan.Subscription, error) {
-	sub, err := n.conn.Subscribe("order-channel", func(m *stan.Msg) {
+	sub, err := n.conn.Subscribe("orders", func(m *stan.Msg) {
 		var order models.Order
 
 		err := json.Unmarshal(m.Data, &order)

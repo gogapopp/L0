@@ -3,6 +3,7 @@ module github.com/gogapopp/L0
 go 1.22.0
 
 require (
+	github.com/brianvoe/gofakeit v3.18.0+incompatible
 	github.com/golang-migrate/migrate/v4 v4.17.1
 	github.com/ilyakaznacheev/cleanenv v1.5.0
 	github.com/jackc/pgx/v5 v5.5.5
