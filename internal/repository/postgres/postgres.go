@@ -37,8 +37,8 @@ func New(config *config.Config) (*repository, error) {
 	}, nil
 }
 
-func (s *repository) Close() {
-	s.db.Close()
+func (r *repository) Close() {
+	r.db.Close()
 }
 
 func (r *repository) MigrateUp(config *config.Config) error {
