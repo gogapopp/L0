@@ -67,8 +67,10 @@ func main() {
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT)
 	<-quit
 
-	if err := postgres.MigrateDown(config); err != nil {
-		logger.Fatal(err)
+	if config.IsMigrationDown {
+		if err := postgres.MigrateDown(config); err != nil {
+			logger.Fatal(err)
+		}
 	}
 
 	if err := httpserver.Shutdown(context.Background()); err != nil && err != http.ErrServerClosed {

@@ -22,7 +22,7 @@ func main() {
 	conn := must(connect(config))
 	defer conn.close()
 
-	ordersNums := 1
+	ordersNums := 2
 
 	orders := createOrders(ordersNums)
 

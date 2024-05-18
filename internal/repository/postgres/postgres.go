@@ -46,7 +46,7 @@ func (r *storage) MigrateUp(config *config.Config) error {
 
 	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", config.PostgresUser, config.PostgresPassword, config.PostgresHost, config.PostgresPort, config.PostgresDb)
 
-	m, err := migrate.New(config.MogrationDir, dsn)
+	m, err := migrate.New(config.MigrationDir, dsn)
 	if err != nil {
 		return fmt.Errorf("%s: %w", op, err)
 	}
@@ -63,7 +63,7 @@ func (r *storage) MigrateDown(config *config.Config) error {
 
 	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", config.PostgresUser, config.PostgresPassword, config.PostgresHost, config.PostgresPort, config.PostgresDb)
 
-	m, err := migrate.New(config.MogrationDir, dsn)
+	m, err := migrate.New(config.MigrationDir, dsn)
 	if err != nil {
 		return fmt.Errorf("%s: %w", op, err)
 	}

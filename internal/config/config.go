@@ -8,11 +8,12 @@ import (
 )
 
 type Config struct {
-	MogrationDir string `yaml:"migration_dir"`
-	HTTPServer   `yaml:"http_server"`
-	Postgres     `yaml:"postgres"`
-	Cache        `yaml:"cache"`
-	Stan         `yaml:"stan"`
+	MigrationDir    string `yaml:"migration_dir"`
+	IsMigrationDown bool   `yaml:"migration_down"`
+	HTTPServer      `yaml:"http_server"`
+	Postgres        `yaml:"postgres"`
+	Cache           `yaml:"cache"`
+	Stan            `yaml:"stan"`
 }
 
 type HTTPServer struct {
