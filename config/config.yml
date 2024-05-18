@@ -9,7 +9,7 @@ postgres:
   postgres_host: "localhost"
   postgres_port: "54321"
 migration_dir: "file://migrations/"
-migration_down: false # or true
+migration_down: true
 stan:
   cluster_id: "test-cluster"
   client_id: "client-id"

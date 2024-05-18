@@ -39,11 +39,11 @@ func GetOrderById(logger *zap.SugaredLogger, service servicer) http.HandlerFunc 
 		}
 
 		type PageData struct {
-			Order *models.Order
+			Order models.Order
 		}
 
 		data := PageData{
-			Order: &order,
+			Order: order,
 		}
 
 		err = tmpl.Execute(w, data)
@@ -52,11 +52,5 @@ func GetOrderById(logger *zap.SugaredLogger, service servicer) http.HandlerFunc 
 			http.Error(w, "something went wrong", http.StatusInternalServerError)
 			return
 		}
-
-		// if err := json.NewEncoder(w).Encode(order); err != nil {
-		// 	logger.Errorf("%s: %w", op, err)
-		// 	http.Error(w, "something went wrong", http.StatusInternalServerError)
-		// 	return
-		// }
 	}
 }
