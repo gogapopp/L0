@@ -11,11 +11,11 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-type repository struct {
+type storage struct {
 	db *pgxpool.Pool
 }
 
-func New(config *config.Config) (*repository, error) {
+func New(config *config.Config) (*storage, error) {
 	const op = "repositry.postgres.New"
 
 	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", config.PostgresUser, config.PostgresPassword, config.PostgresHost, config.PostgresPort, config.PostgresDb)
@@ -32,16 +32,16 @@ func New(config *config.Config) (*repository, error) {
 		return nil, fmt.Errorf("%s: %w", op, err)
 	}
 
-	return &repository{
+	return &storage{
 		db: db,
 	}, nil
 }
 
-func (r *repository) Close() {
+func (r *storage) Close() {
 	r.db.Close()
 }
 
-func (r *repository) MigrateUp(config *config.Config) error {
+func (r *storage) MigrateUp(config *config.Config) error {
 	const op = "repositry.postgres.MigrateUp"
 
 	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", config.PostgresUser, config.PostgresPassword, config.PostgresHost, config.PostgresPort, config.PostgresDb)
@@ -58,7 +58,7 @@ func (r *repository) MigrateUp(config *config.Config) error {
 	return nil
 }
 
-func (r *repository) MigrateDown(config *config.Config) error {
+func (r *storage) MigrateDown(config *config.Config) error {
 	const op = "repositry.postgres.MigrateDown"
 
 	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", config.PostgresUser, config.PostgresPassword, config.PostgresHost, config.PostgresPort, config.PostgresDb)

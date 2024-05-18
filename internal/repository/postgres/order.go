@@ -6,9 +6,11 @@ import (
 	"fmt"
 
 	"github.com/gogapopp/L0/internal/models"
+	"github.com/gogapopp/L0/internal/repository"
+	"github.com/jackc/pgx/v5"
 )
 
-func (r *repository) GetOrder(ctx context.Context, orderUID string) (models.Order, error) {
+func (r *storage) GetOrder(ctx context.Context, orderUID string) (models.Order, error) {
 	const (
 		op    = "postgres.order.GetOrder"
 		query = "SELECT data FROM orders WHERE data->>'order_uid' = $1"
@@ -21,7 +23,11 @@ func (r *repository) GetOrder(ctx context.Context, orderUID string) (models.Orde
 		data  []byte
 	)
 
-	if err := row.Scan(&data); err != nil {
+	err := row.Scan(&data)
+	if err != nil {
+		if err == pgx.ErrNoRows {
+			return models.Order{}, fmt.Errorf("%s: %w", op, repository.ErrOrderNotExist)
+		}
 		return models.Order{}, fmt.Errorf("%s: %w", op, err)
 	}
 
@@ -32,7 +38,7 @@ func (r *repository) GetOrder(ctx context.Context, orderUID string) (models.Orde
 	return order, nil
 }
 
-func (r *repository) AddOrder(ctx context.Context, order models.Order) error {
+func (r *storage) AddOrder(ctx context.Context, order models.Order) error {
 	const (
 		op    = "postgres.order.AddOrder"
 		query = "INSERT INTO orders (data) VALUES ($1)"
@@ -51,7 +57,7 @@ func (r *repository) AddOrder(ctx context.Context, order models.Order) error {
 	return nil
 }
 
-func (r *repository) GetAllOrders(ctx context.Context) ([]models.Order, error) {
+func (r *storage) GetAllOrders(ctx context.Context) ([]models.Order, error) {
 	const (
 		op    = "postgres.order.GetAllOrders"
 		query = "SELECT data FROM orders"
