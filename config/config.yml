@@ -9,5 +9,9 @@ postgres:
   postgres_host: "localhost"
   postgres_port: "54321"
 migration_dir: "file://migrations/"
+stan:
+  cluster_id: "test-cluster"
+  client_id: "client-id"
+  dsn: "nats://localhost:4222"
 # localhost:54321
 # PG_DSN=postgres://banner-user:banner-password@pg-local:5432/banner

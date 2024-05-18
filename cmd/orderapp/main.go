@@ -26,7 +26,7 @@ func main() {
 		postgres = must(postgres.New(config))
 		cache    = cache.New(time.Hour*24, time.Hour*24)
 
-		stanConn = must(nats_streaming.Connect())
+		stanConn = must(nats_streaming.Connect(config))
 
 		service = service.New(postgres, cache)
 	)
@@ -56,9 +56,12 @@ func main() {
 		WriteTimeout: config.Timeout,
 	}
 
-	if err := httpserver.ListenAndServe(); err != nil {
-		logger.Fatal(err)
-	}
+	go func() {
+		if err := httpserver.ListenAndServe(); err != nil {
+			logger.Fatal(err)
+		}
+	}()
+	logger.Infof("server running at: %s", config.HTTPServer.Address)
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT)

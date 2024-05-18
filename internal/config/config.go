@@ -12,6 +12,7 @@ type Config struct {
 	HTTPServer   `yaml:"http_server"`
 	Postgres     `yaml:"postgres"`
 	Cache        `yaml:"cache"`
+	Stan         `yaml:"stan"`
 }
 
 type HTTPServer struct {
@@ -31,6 +32,12 @@ type Postgres struct {
 type Cache struct {
 	CleanupInterval time.Time `yaml:"cleanup_interval"`
 	DefaultTTL      time.Time `yaml:"default_ttl"`
+}
+
+type Stan struct {
+	StanClusterID string `yaml:"cluster_id"`
+	ClientID      string `yaml:"client_id"`
+	DSN           string `yaml:"dsn"`
 }
 
 func New() (*Config, error) {

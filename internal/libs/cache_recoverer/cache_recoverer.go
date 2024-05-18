@@ -17,7 +17,9 @@ type cacher interface {
 
 func CacheRecover(logger *zap.SugaredLogger, cache cacher, store storager) {
 	orders, err := store.GetAllOrders(context.Background())
-	logger.Error("failed to get all orders from the database: %w", err)
+	if err != nil {
+		logger.Errorf("failed to get all orders from the database: %w", err)
+	}
 	for _, order := range orders {
 		cache.SetOrderInCache(order)
 	}

@@ -31,5 +31,6 @@ func (n *nats) Sub(logger *zap.SugaredLogger, store storager) (stan.Subscription
 			return
 		}
 	}, stan.DurableName("durable"))
+
 	return sub, err
 }

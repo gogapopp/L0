@@ -1,6 +1,7 @@
 package natsstreaming
 
 import (
+	"github.com/gogapopp/L0/internal/config"
 	"github.com/nats-io/stan.go"
 )
 
@@ -8,8 +9,8 @@ type nats struct {
 	conn stan.Conn
 }
 
-func Connect() (*nats, error) {
-	sc, err := stan.Connect("test-cluster", "client-id", stan.NatsURL("nats://localhost:4222"))
+func Connect(config *config.Config) (*nats, error) {
+	sc, err := stan.Connect(config.Stan.StanClusterID, config.Stan.ClientID, stan.NatsURL(config.Stan.DSN))
 	if err != nil {
 		return &nats{}, err
 	}
@@ -18,5 +19,4 @@ func Connect() (*nats, error) {
 
 func (n *nats) Close() {
 	n.conn.Close()
-	n.conn.NatsConn().Drain()
 }

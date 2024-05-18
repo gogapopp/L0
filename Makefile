@@ -1,5 +1,6 @@
 dup:
 	docker-compose up
+	
 ddown:
 	docker-compose down
 
