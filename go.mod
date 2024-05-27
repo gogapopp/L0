@@ -6,7 +6,7 @@ require (
 	github.com/brianvoe/gofakeit v3.18.0+incompatible
 	github.com/golang-migrate/migrate/v4 v4.17.1
 	github.com/ilyakaznacheev/cleanenv v1.5.0
-	github.com/jackc/pgx/v5 v5.5.5
+	github.com/jackc/pgx/v5 v5.6.0
 	github.com/nats-io/stan.go v0.10.4
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	go.uber.org/zap v1.27.0
